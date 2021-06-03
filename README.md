@@ -4,8 +4,8 @@
 v14.12.0
 
 ## 📬 Steps to Run the app:
-1. use "npm i" (to install all the dependencies)
-2. "npm run serve" to start the dev server 
+1. use "npm i" (to install all the dependencies).
+2. "npm run serve" to start the dev server.
 
 ## Project Details
 
