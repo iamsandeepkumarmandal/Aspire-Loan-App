@@ -1,7 +1,7 @@
 <template>
-  <section class="landing-page-wrapper text-center section-padding">
+  <section class="dashboard-wrapper section-padding">
     <div class="container">
-      <div class="landing-page-wrapper--main-content">
+      <div class="no-loans-found text-center" v-if="!unApprovedLoansArray || (unApprovedLoansArray && unApprovedLoansArray.length === 0)">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           height="200px"
@@ -93,41 +93,91 @@
             fill="#edc472"
           />
         </svg>
-        <h1>Looking for a Loan.</h1>
-        <h2>Your Personal Loan is just a click away!</h2>
-        <p>
-          Don't have an account. Create an account and apply for load in 2mins. <br/>
-          Have an account already, Please <router-link to="/login" class="theme-primary-color bold-font-weight">Login</router-link> & apply for personal loans in seconds!
-        </p>
-        <div class="cta-wrapper">
-          <router-link to="/register" class="theme-button display-inline-block">Register Here</router-link>
+        <div class="no-loans-found--meta">
+          <h2>No Unapproved Loans</h2>
         </div>
+      </div>
+      <div class="loans-listing-wrapper" v-if="unApprovedLoansArray && unApprovedLoansArray.length >= 1">
+        <h2 class="text-center">View Unapproved Loans</h2>
+        <div class="table-responsive">
+          <table>
+            <thead>
+              <tr>
+                <td>No.</td>
+                <td>Mobile Number</td>
+                <td>Name</td>
+                <td>Loan Amount</td>
+                <td>Tenure</td>
+                <td></td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="(eachObj, index) in unApprovedLoansArray" :key="`loan${index}`">
+                <td>
+                  {{ index + 1 }}
+                </td>
+                <td>
+                  {{ eachObj.phoneNumber }}
+                </td>
+                <td>
+                  {{ eachObj.name }}
+                </td>
+                <td>
+                  &#8377; {{ eachObj.loanAmount }} /-
+                </td>
+                <td>
+                  {{ eachObj.tenure }} Weeks
+                </td>
+                <td class="text-center">
+                  <button class="theme-button secondary cursor-pointer" @click="approveCustomerLoans(eachObj)">Approve</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="text-center">
+        <button class="theme-button check-again cursor-pointer" @click="fetchAllLoans">Check Again</button>
       </div>
     </div>
   </section>
 </template>
 
 <script>
+import '@/assets/scss/pages/dashboard.scss';
+import { getAllUnApprovedLoans, approveLoans } from '@/services/admin.api';
+
 export default {
-  name: 'Home',
+  name: 'AdminDashboard',
+  data() {
+    return {
+      // variable to store the unapproved loans
+      unApprovedLoansArray: null,
+    };
+  },
+  methods: {
+    // method to fetch all the unapproved loans
+    async fetchAllLoans() {
+      const response = await getAllUnApprovedLoans();
+      if (response.statusCode === 200) {
+        this.unApprovedLoansArray = response.loans;
+      }
+    },
+    // method to approve the loans
+    async approveCustomerLoans(requestBodyObj) {
+      const response = await approveLoans(requestBodyObj);
+      if (response.statusCode === 200) {
+        this.$swal.fire(
+          'Success',
+          response.statusMessage,
+          'success',
+        );
+        this.fetchAllLoans();
+      }
+    },
+  },
+  mounted() {
+    this.fetchAllLoans();
+  },
 };
 </script>
-
-<style lang="scss" scoped>
-.landing-page-wrapper {
-  h1 {
-    margin: 10px 0 5px;
-  }
-  &--main-content {
-    max-width: 550px;
-    margin: 0 auto;
-    .cta-wrapper {
-      margin-top: 16px;
-      .theme-button{
-        min-width: 180px;
-        padding: 15px 0;
-      }
-    }
-  }
-}
-</style>
