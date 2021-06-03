@@ -22,11 +22,11 @@ to access Admin panel please use '/admin-dashboard'
 3. Admin can Approve the requested loans.
 4. Once approved, customers can see the details in the dashboard (after authetication)
 
-#### Landing Page
+### Landing Page
 End Users can register (if not having an account) or Login (Existing User)
 Once the end user is authenticated we redirect them to '/dashboard' page.
 
-#### Dashboard Page
+### Dashboard Page
 1. Endusers can see all the approved loans 
 2. Request for a loan
 3. Pay for a certain loan
