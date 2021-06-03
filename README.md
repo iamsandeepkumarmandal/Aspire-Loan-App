@@ -31,7 +31,7 @@ Once the end user is authenticated we redirect them to '/dashboard' page.
 2. Request for a loan
 3. Pay for a certain loan
 
-### Storing Date
+### Storing Data
 As of now, i am using localStorage to store the data in the browser like account details, loan details.
 
 ### Code Details
