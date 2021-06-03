@@ -44,10 +44,10 @@ Currently we have three services defined in the code
 2. For styling the entire ui, using the base setup of SCSS is same as CSS Challange
 https://xd.adobe.com/view/80c753f2-db2f-4dfc-b6c2-ce39a4c787f0-d594/
 
-### Demo Link of CSS Challange:
+#### Demo Link of CSS Challange:
 https://aspire-app.vercel.app/
 
-### Github Link of CSS Challange:
+#### Github Link of CSS Challange:
 https://github.com/iamsandeepkumarmandal/aspire-dashboard
 
 3. Pages are under the views directory
